@@ -1,0 +1,135 @@
+{% extends 'base/base.html' %}
+{% block content %}
+<link rel="stylesheet" href="/media/static/css/request/jquery-ui.css">
+<script src="/media/static/js/request/jquery-3.6.0.js"></script>
+<script src="/media/static/js/request/jquery-ui.js"></script>
+<script>
+$( function() {
+    $( "#id_Customers_full_name" ).autocomplete({
+        source: "{% url 'autocomplete_cus' %}",
+    });
+});
+</script>
+<script>
+$( function() {
+    $( "#id_Lecture_hall" ).autocomplete({
+        source: "{% url 'autocomplete_lec' %}",
+    });
+});
+</script>
+<br>
+<div class="mx-3">
+    <h2>
+        Создать заявку
+    </h2>
+    <br>
+    <a style="font-weight: bold;"><h7>Поля помеченные</h7></a>
+    <a style="font-weight: bold;"><h7>"<a style="color:red; font-weight: bold;">*</a><a style="font-weight: bold;">",
+    </a>
+    </h7></a><a style="font-weight: bold;"><h7>обязательны для заполнения!</h7></a>
+    <br>
+    <br>
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <p>
+            <label for="id_Customers_full_name">Заказчик<h7><a style="color:red;">*</a></h7>:</label>
+            <input type="text"
+                   class="form-control"
+                   style="width: 500px;"
+                   name="Customers_full_name"
+                   maxlength="50"
+                   required=""
+                   id="id_Customers_full_name"
+            placeholder="Введите Ф.И.О. заказчика">
+        </p>
+        <p>
+            <label for="id_Lecture_hall">Аудитория<h7><a style="color:red;">*</a></h7>:</label>
+            <input type="text"
+                   class="form-control"
+                   style="width: 200px;"
+                   name="Lecture_hall"
+                   maxlength="10"
+                   required
+                   id="id_Lecture_hall"
+                   placeholder="Номер аудитории">
+        </p>
+        <p>
+            <label for="id_Description" class="form-label">Описание</label>
+            <textarea name="Description"
+                      class="form-control"
+                      style="width: 500px; resize: none;"
+                      cols="50"
+                      rows="3"
+                      style="resize:none;"
+                      maxlength="150"
+                      id="id_Description"
+                      placeholder="Введите описание проблемы"></textarea>
+        </p>
+        <p>
+            <label for="id_Work">Тип проводимых работ<h7><a style="color:red;">*</a></h7>:</label>
+            <select name="Work"
+                    class="form-select"
+                    style="width: 400px;"
+                    required
+                    id="id_Work">
+                <option value="" selected="">---Список---</option>
+                {% for item in work %}
+                    <option value="{{ item.id }}">{{ item.Type_of_work }}</option>
+                {% endfor %}
+            </select>
+        </p>
+        <p>
+            <label for="id_Performer">Исполнитель
+                <h7><a style="color:red;">*</a></h7>
+                :</label>
+            <select name="Performer"
+                    class="form-select"
+                    style="width: 400px;"
+                    required
+                    id="id_Performer">
+                <option value="" selected="">---Список---</option>
+                {% for item in perf %}
+                <option value="{{ item.id }}">{{ item.Full_name_of_the_performer }}</option>
+                {% endfor %}
+            </select>
+        </p>
+        <p>
+            <label for="id_Comment" class="form-label">Комментарий исполнителя:</label>
+            <textarea name="Comment"
+                      class="form-control"
+                      style="width: 500px; resize: none;"
+                      cols="50"
+                      rows="3"
+                      style="resize:none;"
+                      maxlength="150"
+                      id="id_Comment"
+                      placeholder="Введите комментарий"></textarea>
+        </p>
+        <p>
+            <label for="{{ form.Files.id_form_label }}">Загрузка файла:</label>
+            <input type="file"
+                   class="form-control"
+                   style="width: 500px;"
+                   name="Files"
+                   id="{{ form.Files.id_form_label }}">
+        </p>
+        <p>
+            <label for="id_Condition">Состояние заявки<h7><a style="color:red;">*</a></h7>:</label>
+            <select name="Condition"
+                    class="form-select"
+                    style="width: 200px;"
+                    required=""
+                    id="id_Condition">
+                <option value="" selected="">---Список---</option>
+                {% for item in condition %}
+                    <option value="{{ item.id }}">{{ item.Condition }}</option>
+                {% endfor %}
+            </select>
+        </p>
+        <button type="submit"
+                class="btn btn-primary">
+                Добавить
+        </button>
+    </form>
+</div>
+{% endblock %}
