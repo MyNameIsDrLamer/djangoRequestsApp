@@ -130,4 +130,4 @@ LOGIN_REDIRECT_URL = "/"
 # Telegram settings
 TOKEN = '5021175116:AAEctVvtgVVS-MH8ZyN_3Xs5rm_CoiJBsdaiuA'
 bot = telegram.Bot(token=TOKEN)
-chat_id = '-1001611576203'
+chat_id = '-1001611503856'
